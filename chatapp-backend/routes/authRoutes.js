@@ -3,11 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid"; // ✅ import uuid
 import User from "../models/User.js";
 
 const router = express.Router();
 
-// **✅ Signup Route**
+// ✅ Signup Route (Fixed UID issue)
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -18,7 +20,13 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    user = new User({ name, email, password: hashedPassword });
+    user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      uid: uuidv4(), // ✅ always set uid
+    });
+
     await user.save();
 
     res.status(201).json({ message: "User registered successfully" });
@@ -27,6 +35,7 @@ router.post("/signup", async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 });
+
 
 // **✅ Login Route**
 router.post("/login", async (req, res) => {
