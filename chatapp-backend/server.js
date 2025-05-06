@@ -29,11 +29,28 @@ const allowedOrigins = [
   "https://pulse-chat-eta.vercel.app",
 ];
 
-// Apply CORS globally
+// Apply CORS middleware
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed from this origin"));
+    }
+  },
   credentials: true,
 }));
+
+// Manually set headers for preflight requests
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -49,14 +66,13 @@ app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/auth", authRoutes);
 
-// Socket.io setup
+// ✅ Setup Socket.IO with matching CORS
 const io = new Server(server, {
-  cors({
-    origin: "https://pulse-chat-eta.vercel.app", // update to match frontend
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
     credentials: true,
-  })
+  },
 });
 
 const onlineUsers = new Map();
