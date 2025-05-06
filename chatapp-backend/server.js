@@ -51,11 +51,12 @@ app.use("/api/auth", authRoutes);
 
 // Socket.io setup
 const io = new Server(server, {
-  cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
+  cors({
+    origin: "https://pulse-chat-eta.vercel.app", // update to match frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  },
+  })
 });
 
 const onlineUsers = new Map();
