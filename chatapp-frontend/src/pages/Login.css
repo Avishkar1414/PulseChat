@@ -1,0 +1,174 @@
+/* Apply gradient to the entire screen (body and html) */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;  /* Prevent horizontal scroll */
+}
+
+/* Scoped gradient background for Login only */
+.login-page {
+  height: 100vh; /* Full height of the viewport */
+  width: 100%; /* Full width */
+  background: linear-gradient(-45deg, #6a11cb, #2575fc, #ff4e50, #f9d423);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Login card styles */
+.login-page .card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 100%;
+  max-width: 400px;  /* Ensures the card is not too wide on large screens */
+  padding: 2rem;
+}
+
+/* Form styles */
+.login-page h3 {
+  font-weight: 700;
+  color: #fff;
+}
+
+.login-page .form-label {
+  font-weight: 500;
+  color: #eee;
+}
+
+.login-page .form-control {
+  border-radius: 10px;
+  border: none;
+  padding: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-page .form-control:focus {
+  border:none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.4); /* white glow */
+  background-color: rgba(255, 255, 255, 0.15); /* slightly lighter background on focus */
+  color: #fff;
+}
+
+/* Buttons */
+.login-page .btn-primary {
+  background: #007bff;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.login-page .btn-primary:hover {
+  background: #0056b3;
+}
+
+.login-page .btn-light {
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.login-page .btn-light:hover {
+  background-color: #e6e6e6;
+}
+
+.login-page a {
+  color: #ffeb3b;
+  text-decoration: none;
+}
+
+.login-page a:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries for responsiveness */
+
+/* For tablets and small screens */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;  /* Make card width 90% on small screens */
+    padding: 1.5rem;  /* Slightly reduce padding */
+    margin-top: -20px !important;
+  }
+
+  .login-page h3 {
+    font-size: 1.5rem;  /* Slightly smaller heading font */
+  }
+
+  .login-page .form-control {
+    padding: 0.65rem;  /* Reduce padding for smaller screens */
+  }
+
+  .login-page .btn-primary {
+    padding: 0.8rem;  /* Adjust button padding for small screens */
+  }
+
+  .login-page img {
+    width: 100px;  /* Adjust logo size for small screens */
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* For mobile phones (portrait mode) */
+@media (max-width: 480px) {
+  .login-page .card {
+    width: 90%;  /* Make card width 90% on very small screens */
+    padding: 1rem; 
+    margin-top: -200px !important; /* Further reduce padding */
+  }
+
+  .login-page h3 {
+    font-size: 1.25rem;  /* Make heading smaller */
+  }
+
+  .login-page .form-control {
+    padding: 0.5rem;  /* Reduce input padding */
+  }
+
+  .login-page .btn-primary {
+    padding: 0.75rem;  /* Adjust button padding */
+  }
+
+  .login-page img {
+    width: 90px;  /* Make logo smaller */
+    margin-bottom: 1rem;
+  }
+
+  /* Adjust text for links and buttons for better readability */
+  .login-page a {
+    font-size: 0.9rem;
+  }
+}
+
+/* For landscape mobile devices */
+@media (max-width: 600px) and (orientation: landscape) {
+  .login-page .card {
+    width: 85%;  /* Slightly reduce card width for landscape */
+  }
+
+  .login-page img {
+    width: 110px;  /* Adjust logo size in landscape */
+  }
+}
